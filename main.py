@@ -332,7 +332,7 @@ class Kingdom(Builder):
 
 
     def ability(self):
-        active.health += 20
+        g.active_player.health += 20
 
 
 
@@ -511,7 +511,7 @@ class Game():
         self.current_time = int(pygame.time.get_ticks() / 1000)
         self.time_surf = self.paragraph_font.render((str(current_time)), True, (64, 64, 64))
         self.time_rect = self.time_surf.get_rect(center=(450, 75))
-        screen.blit(time_surf, time_rect)
+        g.screen.blit(time_surf, time_rect)
         return self.current_time
 
     def event_ticker(self):
