@@ -18,8 +18,8 @@ class Player():
 class RedCastle(Player):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load("marley/graphics/castle_red.png").convert_alpha()
-        self.active_surf = pygame.image.load("marley/graphics/castle_red_turn.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/castle_red.png").convert_alpha()
+        self.active_surf = pygame.image.load("graphics/castle_red_turn.png").convert_alpha()
         self.rect = self.surf.get_rect(topleft=(50, 250))
 
 
@@ -58,8 +58,8 @@ class RedCastle(Player):
 class BlueCastle(Player):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load("marley/graphics/castle_blue.png").convert_alpha()
-        self.active_surf = pygame.image.load("marley/graphics/castle_blue_turn.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/castle_blue.png").convert_alpha()
+        self.active_surf = pygame.image.load("graphics/castle_blue_turn.png").convert_alpha()
         self.rect = self.surf.get_rect(topright=(850,250))
 
     def blit_castle(self):
@@ -157,7 +157,7 @@ class Builder(Card):
 class Catapult(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/catapult.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/catapult.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -167,7 +167,7 @@ class Catapult(Soldier):
 class Warrior(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/warrior.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/warrior.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 4
 
@@ -178,7 +178,7 @@ class Warrior(Soldier):
 class King(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/king.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/king.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -189,7 +189,7 @@ class King(Soldier):
 class Archer(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/archer.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/archer.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 5
 
@@ -202,7 +202,7 @@ class Archer(Soldier):
 class Fire(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/fire.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/fire.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 5
         self.fire = 3
@@ -219,7 +219,7 @@ class Fire(Soldier):
 class SpellBook(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/spellbook.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/spellbook.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
         #self.draw = 3
@@ -236,7 +236,7 @@ class SpellBook(Mage):
 class Confusion(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/confusion.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/confusion.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 15
 
@@ -247,7 +247,7 @@ class Confusion(Mage):
 class Dragon(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/dragon.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/dragon.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 25
 
@@ -258,7 +258,7 @@ class Dragon(Mage):
 class Wizard(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/wizard.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/wizard.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -269,7 +269,7 @@ class Wizard(Mage):
 class Scroll(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/scroll.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/scroll.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -280,7 +280,7 @@ class Scroll(Mage):
 class Gate(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/gate.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/gate.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 7
 
@@ -291,7 +291,7 @@ class Gate(Builder):
 class BlackSmith(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/blacksmith.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/blacksmith.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -302,7 +302,7 @@ class BlackSmith(Builder):
 class Castle(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/castle.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/castle.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -313,7 +313,7 @@ class Castle(Builder):
 class Cart(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/cart.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/cart.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -326,7 +326,7 @@ class Cart(Builder):
 class Kingdom(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'marley/graphics/kingdom.png').convert_alpha()
+        self.surf = pygame.image.load(f'graphics/kingdom.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 17
 
@@ -370,11 +370,11 @@ class Game():
         self.instruction_rect = self.instruction_surf.get_rect(center=(450, 225))
         
         #create rectangle for game screen background
-        self.bg_surf = pygame.image.load('marley/graphics/background.png').convert_alpha()
+        self.bg_surf = pygame.image.load('graphics/background.png').convert_alpha()
         self.bg_rect = self.bg_surf.get_rect()
 
         #create rectangle for discard location
-        self.discard_surf = pygame.image.load('marley/graphics/card_back.png').convert_alpha()
+        self.discard_surf = pygame.image.load('graphics/card_back.png').convert_alpha()
         self.discard_rect = self.discard_surf.get_rect(center= (450, 250))
 
     def setup(self):
@@ -496,9 +496,9 @@ class Game():
 
     def display_time(self):
         self.current_time = int(pygame.time.get_ticks() / 1000)
-        self.time_surf = self.paragraph_font.render((str(current_time)), True, (64, 64, 64))
+        self.time_surf = self.paragraph_font.render((str(self.current_time)), True, (64, 64, 64))
         self.time_rect = self.time_surf.get_rect(center=(450, 75))
-        g.screen.blit(time_surf, time_rect)
+        g.screen.blit(self.time_surf, self.time_rect)
         return self.current_time
 
     def event_ticker(self):
