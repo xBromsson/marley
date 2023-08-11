@@ -18,8 +18,8 @@ class Player():
 class RedCastle(Player):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load("graphics/castle_red.png").convert_alpha()
-        self.active_surf = pygame.image.load("graphics/castle_red_turn.png").convert_alpha()
+        self.surf = pygame.image.load("marley/graphics/castle_red.png").convert_alpha()
+        self.active_surf = pygame.image.load("marley/graphics/castle_red_turn.png").convert_alpha()
         self.rect = self.surf.get_rect(topleft=(50, 250))
 
 
@@ -31,7 +31,7 @@ class RedCastle(Player):
 
     def blit_cards(self):
         for i, card in enumerate(self.hand):
-            card.move_to(((i + .5) * (g.width / len(self.hand))), 525)
+            card.move_to(((i+1) * (g.width / (len(self.hand)+1))), 525)
             card.blit()
 
     def refresh_hand(self):
@@ -58,8 +58,8 @@ class RedCastle(Player):
 class BlueCastle(Player):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load("graphics/castle_blue.png").convert_alpha()
-        self.active_surf = pygame.image.load("graphics/castle_blue_turn.png").convert_alpha()
+        self.surf = pygame.image.load("marley/graphics/castle_blue.png").convert_alpha()
+        self.active_surf = pygame.image.load("marley/graphics/castle_blue_turn.png").convert_alpha()
         self.rect = self.surf.get_rect(topright=(850,250))
 
     def blit_castle(self):
@@ -70,7 +70,7 @@ class BlueCastle(Player):
 
     def blit_cards(self):
         for i, card in enumerate(self.hand):
-            card.move_to(100 + (i * (g.width / len(self.hand))), 525)
+            card.move_to(((i+1) * (g.width / (len(self.hand)+1))), 525)
             card.blit()
 
     def refresh_hand(self):
@@ -157,7 +157,7 @@ class Builder(Card):
 class Catapult(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/catapult.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/catapult.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -167,7 +167,7 @@ class Catapult(Soldier):
 class Warrior(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/warrior.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/warrior.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 4
 
@@ -178,7 +178,7 @@ class Warrior(Soldier):
 class King(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/king.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/king.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -189,7 +189,7 @@ class King(Soldier):
 class Archer(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/archer.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/archer.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 5
 
@@ -202,7 +202,7 @@ class Archer(Soldier):
 class Fire(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/fire.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/fire.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 5
         self.fire = 3
@@ -219,7 +219,7 @@ class Fire(Soldier):
 class SpellBook(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/spellbook.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/spellbook.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
         #self.draw = 3
@@ -236,7 +236,7 @@ class SpellBook(Mage):
 class Confusion(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/confusion.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/confusion.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 15
 
@@ -247,7 +247,7 @@ class Confusion(Mage):
 class Dragon(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/dragon.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/dragon.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 25
 
@@ -258,7 +258,7 @@ class Dragon(Mage):
 class Wizard(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/wizard.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/wizard.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -269,7 +269,7 @@ class Wizard(Mage):
 class Scroll(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/scroll.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/scroll.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -280,7 +280,7 @@ class Scroll(Mage):
 class Gate(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/gate.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/gate.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 7
 
@@ -291,7 +291,7 @@ class Gate(Builder):
 class BlackSmith(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/blacksmith.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/blacksmith.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -302,7 +302,7 @@ class BlackSmith(Builder):
 class Castle(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/castle.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/castle.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -313,7 +313,7 @@ class Castle(Builder):
 class Cart(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/cart.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/cart.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -326,19 +326,13 @@ class Cart(Builder):
 class Kingdom(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f'graphics/kingdom.png').convert_alpha()
+        self.surf = pygame.image.load(f'marley/graphics/kingdom.png').convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 17
 
 
     def ability(self):
         g.active_player.health += 20
-
-
-
-
-
-
 
 def blit_things():
     redplayer.blit_castle()
@@ -349,33 +343,41 @@ class Game():
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('Seige')
+
+        #create and set variables for the game
         self.run = True
-        self.state = "upkeep"
+        self.state = "home"
         self.start = False
         self.width = 900
         self.height = 600
         self.discard = []
         self.deck = []
-        self.clouds_list = []
         self.active_player = None
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
+
+        #set fonts
         self.title_font = pygame.font.Font(None, 50)
-        self.seige_title = self.title_font.render("Seige", True, (64, 64, 64))
-        self.seige_title_rect = self.seige_title.get_rect(center=(450, 150))
+        self.health_font = pygame.font.Font(None, 40)
         self.paragraph_font = pygame.font.Font(None, 25)
+
+        #create rectangle for game title
+        self.seige_title = self.title_font.render("SEIGE", True, (64, 64, 64))
+        self.seige_title_rect = self.seige_title.get_rect(center=(450, 100))
+        
+        #create rectangle for game instructions on start screen
         self.instruction_surf = self.paragraph_font.render("Press Enter To Start", True, (64, 64, 64))
         self.instruction_rect = self.instruction_surf.get_rect(center=(450, 225))
-        self.health_font = pygame.font.Font(None, 40)
-        self.bg_surf = pygame.image.load('graphics/background.png').convert_alpha()
+        
+        #create rectangle for game screen background
+        self.bg_surf = pygame.image.load('marley/graphics/background.png').convert_alpha()
         self.bg_rect = self.bg_surf.get_rect()
-        self.cloud_surf = pygame.image.load('graphics/cloud_1.png').convert_alpha()
-        self.cloud_rect = self.cloud_surf.get_rect(center=(925,random.randrange(25,250)))
-        self.discard_surf = pygame.image.load('graphics/card_back.png').convert_alpha()
+
+        #create rectangle for discard location
+        self.discard_surf = pygame.image.load('marley/graphics/card_back.png').convert_alpha()
         self.discard_rect = self.discard_surf.get_rect(center= (450, 250))
 
     def setup(self):
-
         self.active_player = redplayer
 
     def handle_inputs(self):
@@ -385,7 +387,7 @@ class Game():
                 if card.rect.collidepoint(mouse_pos) and event.button == 1 and card.playable == True:
                     g.discard.insert(0, g.active_player.hand.pop(i))
                     #self.hand.insert(i, deck.pop(0))
-                    g.state = "play"
+                    g.state = "stack"
                     timer.log_time()
                     timer2.log_time()
                 if card.rect.collidepoint(mouse_pos) and event.button == 3:
@@ -407,22 +409,7 @@ class Game():
 
     def display_game_screen(self):
         self.screen.blit(self.bg_surf, self.bg_rect)
-        self.screen.blit(self.cloud_surf, self.cloud_rect)
         self.screen.blit(self.seige_title, self.seige_title_rect)
-
-        self.cloud_rect.x -= 1
-        if self.cloud_rect.x < -100:
-            self.cloud_rect.x = random.randrange(901,925)
-            self.cloud_rect.y = random.randrange(10,250)
-
-    def blit_cloud(self):
-        if self.clouds_list:
-            for x, each_cloud_rect in enumerate(self.clouds_list):
-                each_cloud_rect.x -= 1
-                self.screen.blit(self.cloud_surf, each_cloud_rect)
-
-                if each_cloud_rect.x < -100:
-                    g.clouds_list.pop(x)
 
 
     def display_stats(self):
@@ -431,15 +418,15 @@ class Game():
         self.redplayer_health_rect = self.redplayer_health_surf.get_rect(center=(50, 200))
         self.screen.blit(self.redplayer_health_surf, self.redplayer_health_rect)
 
-        self.redplayer_sword_surf = self.health_font.render((str(redplayer.swords)), True, (64, 64, 64))
+        self.redplayer_sword_surf = self.health_font.render(("S"+str(redplayer.swords)), True, (64, 64, 64))
         self.redplayer_sword_rect = self.redplayer_sword_surf.get_rect(center=(25, 225))
         self.screen.blit(self.redplayer_sword_surf, self.redplayer_sword_rect)
 
-        self.redplayer_crystal_surf = self.health_font.render((str(redplayer.crystals)), True, (64, 64, 64))
+        self.redplayer_crystal_surf = self.health_font.render(("C"+str(redplayer.crystals)), True, (64, 64, 64))
         self.redplayer_crystal_rect = self.redplayer_crystal_surf.get_rect(center=(25, 250))
         self.screen.blit(self.redplayer_crystal_surf, self.redplayer_crystal_rect)
 
-        self.redplayer_brick_surf = self.health_font.render((str(redplayer.bricks)), True, (64, 64, 64))
+        self.redplayer_brick_surf = self.health_font.render(("B"+str(redplayer.bricks)), True, (64, 64, 64))
         self.redplayer_brick_rect = self.redplayer_brick_surf.get_rect(center=(25, 275))
         self.screen.blit(self.redplayer_brick_surf, self.redplayer_brick_rect)
 
@@ -460,15 +447,15 @@ class Game():
         self.blueplayer_health_rect = self.blueplayer_health_surf.get_rect(center=(850, 200))
         self.screen.blit(self.blueplayer_health_surf, self.blueplayer_health_rect)
 
-        self.blueplayer_sword_surf = self.health_font.render((str(blueplayer.swords)), True, (64, 64, 64))
+        self.blueplayer_sword_surf = self.health_font.render(("S"+str(blueplayer.swords)), True, (64, 64, 64))
         self.blueplayer_sword_rect = self.blueplayer_sword_surf.get_rect(center=(825, 225))
         self.screen.blit(self.blueplayer_sword_surf, self.blueplayer_sword_rect)
 
-        self.blueplayer_crystal_surf = self.health_font.render((str(blueplayer.crystals)), True, (64, 64, 64))
+        self.blueplayer_crystal_surf = self.health_font.render(("C"+str(blueplayer.crystals)), True, (64, 64, 64))
         self.blueplayer_crystal_rect = self.blueplayer_crystal_surf.get_rect(center=(825, 250))
         self.screen.blit(self.blueplayer_crystal_surf, self.blueplayer_crystal_rect)
 
-        self.blueplayer_brick_surf = self.health_font.render((str(blueplayer.bricks)), True, (64, 64, 64))
+        self.blueplayer_brick_surf = self.health_font.render(("B"+str(blueplayer.bricks)), True, (64, 64, 64))
         self.blueplayer_brick_rect = self.blueplayer_brick_surf.get_rect(center=(825, 275))
         self.screen.blit(self.blueplayer_brick_surf, self.blueplayer_brick_rect)
 
@@ -518,7 +505,7 @@ class Game():
         self.event_timer = pygame.USEREVENT + 1
         pygame.time.set_timer(self.event_timer, 5000)
 
-
+#setup variables
 g = Game()
 redplayer = RedCastle()
 blueplayer = BlueCastle()
@@ -547,12 +534,11 @@ while g.run:
             exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                g.start = True
+                g.state = "upkeep"
             if event.key == pygame.K_g:
                 redplayer.health = 0
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
-
         if g.start:
             if timer.wait and timer2.wait == False:
                 g.active_player.handle_inputs()
@@ -561,26 +547,23 @@ while g.run:
                 if event.key == pygame.K_RETURN:
                     g.start = True
         if event.type == g.event_timer:
-            g.clouds_list.append(g.cloud_surf.get_rect(center=(random.randrange(915,950),random.randrange(25,250))))
-            print(g.clouds_list)
             pass
 
-    if g.start:
+    if g.start == True:
 
         g.display_game_screen()
         timer.check()
         timer2.check()
-        g.blit_cloud()
         g.display_discard()
         g.display_stats()
         blit_things()
 
         if g.state == "upkeep":
             g.active_player.upkeep()
-            g.state = "start"
-        if g.state == "start":
-            g.state = g.handle_inputs()
+            g.state = "play"
         if g.state == "play":
+            g.state = g.handle_inputs()
+        if g.state == "stack":
             g.active_player.play_card()
             g.apply_abilities()
             g.state = "clean"
@@ -588,7 +571,6 @@ while g.run:
             if timer.wait == False:
                 g.active_player.refresh_hand()
                 if timer2.wait == False:
-                    g.clouds_list.append(g.cloud_surf.get_rect())
                     g.next_player_active()
                     g.state = "upkeep"
 
@@ -598,7 +580,12 @@ while g.run:
         if redplayer.health >= 100 or blueplayer.health >= 100:
             g.state = "gameover"
 
-    elif g.start == False or g.state == "gameover":
+    elif g.state == "gameover":
+        g.start = False
+        g.display_home_screen()
+
+    elif g.state == "home":
+        g.start = False
         g.display_home_screen()
 
     pygame.display.update()
