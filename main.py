@@ -353,14 +353,11 @@ class Kingdom(Builder):
         g.active_player.health += 20
 
 
-def blit_things():
-    redplayer.blit_castle()
-    blueplayer.blit_castle()
-    g.active_player.blit_cards()
-
-
 class Game:
     def __init__(self):
+        self.init_game()
+
+    def init_game(self):
         pygame.init()
         pygame.display.set_caption("Seige")
 
@@ -412,6 +409,26 @@ class Game:
         self.end_message_bg_surf.fill((255, 255, 255, 128))
         self.end_message_bg_rect = self.end_message_bg_surf.get_rect(center=(450, 300))
 
+        # Text for buttons
+        self.playAgainTextSurf = self.paragraph_font.render(
+            ("Play Again"), True, (0, 0, 0)
+        )
+        self.playAgainTextRect = self.playAgainTextSurf.get_rect(center=(390, 350))
+
+        self.quitGameTextSurf = self.paragraph_font.render(
+            ("Quit Game"), True, (0, 0, 0)
+        )
+        self.quitGameTextRect = self.quitGameTextSurf.get_rect(center=(510, 350))
+
+        # button rectangles for end screen
+        self.playAgainSurf = pygame.Surface((100, 50))
+        self.playAgainSurf.fill((128, 128, 128))
+        self.playAgainRect = self.playAgainSurf.get_rect(center=(390, 350))
+
+        self.quitGameSurf = pygame.Surface((100, 50))
+        self.quitGameSurf.fill((128, 128, 128))
+        self.quitGameRect = self.quitGameSurf.get_rect(center=(510, 350))
+
         # references to icon images
         self.sword_icon_surf = pygame.image.load(
             "graphics/sword_icon.png"
@@ -440,6 +457,17 @@ class Game:
     def setup(self):
         self.active_player = redplayer
 
+    def reset(self):
+        self.init_game()
+
+    def handlePlayAgain(self):
+        self.reset()
+
+    def blit_things(self):
+        redplayer.blit_castle()
+        blueplayer.blit_castle()
+        self.active_player.blit_cards()
+
     def handle_inputs(self):
         # global game.state
         for i, card in enumerate(g.active_player.hand):
@@ -467,17 +495,39 @@ class Game:
         self.screen.blit(self.seige_title, self.seige_title_rect)
         self.screen.blit(self.instruction_surf, self.instruction_rect)
 
+    # Text for displaying who wins
+    def renderWinner(self):
+        self.winnerMessageSurf = self.stat_font.render(
+            (self.winner + " is the winner!"), True, (64, 64, 64)
+        )
+        self.winnerMessageRect = self.winnerMessageSurf.get_rect(center=(450, 275))
+
     def determine_opponent(self):
         redplayer.opponent = blueplayer
         blueplayer.opponent = redplayer
+
+    def determine_winner(self):
+        if redplayer.health <= 0:
+            self.winner = "Blue Player"
+        elif blueplayer.health <= 0:
+            self.winner = "Red Player"
+        elif redplayer.health >= 100:
+            self.winner = "Red Player"
+        elif blueplayer.health >= 100:
+            self.winner = "Red Player"
 
     def display_game_screen(self):
         self.screen.blit(self.bg_surf, self.bg_rect)
         self.screen.blit(self.seige_title, self.seige_title_rect)
 
-    def display_end_game_message(self):
+    def display_end_game_screen(self):
         self.screen.blit(self.end_message_bg_surf, self.end_message_bg_rect)
         self.screen.blit(self.end_message_surf, self.end_message_rect)
+        self.screen.blit(self.winnerMessageSurf, self.winnerMessageRect)
+        self.screen.blit(self.playAgainSurf, self.playAgainRect)
+        self.screen.blit(self.playAgainTextSurf, self.playAgainTextRect)
+        self.screen.blit(self.quitGameSurf, self.quitGameRect)
+        self.screen.blit(self.quitGameTextSurf, self.quitGameTextRect)
 
     def display_stats(self):
         #######################
@@ -740,10 +790,11 @@ blueplayer = BlueCastle()
 g.setup()
 g.determine_opponent()
 g.build_deck()
-timer = Timer(1000)
-timer2 = Timer(3000)
 g.draw_hands()
 g.event_ticker()
+
+timer = Timer(1000)
+timer2 = Timer(3000)
 
 # USEREVENT Timer.
 
@@ -784,7 +835,7 @@ while g.run:
         timer2.check()
         g.display_discard()
         g.display_stats()
-        blit_things()
+        g.blit_things()
 
         if g.state == "upkeep":
             g.active_player.upkeep()
@@ -803,23 +854,24 @@ while g.run:
                     g.state = "upkeep"
 
         if redplayer.health <= 0 or blueplayer.health <= 0:
+            g.determine_winner()
+            g.renderWinner()
             g.state = "gameover"
-            if redplayer.health <= 0:
-                g.winner = "Blue Player"
-            if redplayer.health <= 0:
-                g.winner = "Red Player"
 
         if redplayer.health >= 100 or blueplayer.health >= 100:
+            g.determine_winner()
+            g.renderWinner()
             g.state = "gameover"
-            if redplayer.health >= 100:
-                g.winner = "Red Player"
-            if redplayer.health >= 100:
-                g.winner = "Red Player"
 
     if g.state == "gameover":
         g.start = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if g.playAgainRect.collidepoint(mouse_pos) and event.button == 1:
+                g.reset()
+
         if not g.displayed_gameover_message:
-            g.display_end_game_message()
+            g.display_end_game_screen()
             g.displayed_gameover_message = True
 
     if g.state == "home":
