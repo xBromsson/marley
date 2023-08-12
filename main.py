@@ -27,7 +27,7 @@ class RedCastle(Player):
         self.rect = self.surf.get_rect(topleft=(50, 250))
 
     def blit_castle(self):
-        if g.active_player == redplayer:
+        if g.active_player == g.redplayer:
             g.screen.blit(self.active_surf, self.rect)
         else:
             g.screen.blit(self.surf, self.rect)
@@ -69,7 +69,7 @@ class BlueCastle(Player):
         self.rect = self.surf.get_rect(topright=(850, 250))
 
     def blit_castle(self):
-        if g.active_player == blueplayer:
+        if g.active_player == g.blueplayer:
             g.screen.blit(self.active_surf, self.rect)
         else:
             g.screen.blit(self.surf, self.rect)
@@ -375,6 +375,14 @@ class Game:
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
+        self.redplayer = RedCastle()
+        self.blueplayer = BlueCastle()
+        self.setup()
+        self.determine_opponent()
+        self.build_deck()
+        self.draw_hands()
+        self.event_ticker()
+
         # FONTS
         self.title_font = pygame.font.Font(None, 50)
         self.health_font = pygame.font.Font(None, 40)
@@ -455,17 +463,18 @@ class Game:
         ).convert_alpha()
 
     def setup(self):
-        self.active_player = redplayer
+        self.active_player = self.redplayer
 
     def reset(self):
         self.init_game()
+        self.state = "home"
 
     def handlePlayAgain(self):
         self.reset()
 
     def blit_things(self):
-        redplayer.blit_castle()
-        blueplayer.blit_castle()
+        self.redplayer.blit_castle()
+        self.blueplayer.blit_castle()
         self.active_player.blit_cards()
 
     def handle_inputs(self):
@@ -503,17 +512,17 @@ class Game:
         self.winnerMessageRect = self.winnerMessageSurf.get_rect(center=(450, 275))
 
     def determine_opponent(self):
-        redplayer.opponent = blueplayer
-        blueplayer.opponent = redplayer
+        self.redplayer.opponent = self.blueplayer
+        self.blueplayer.opponent = self.redplayer
 
     def determine_winner(self):
-        if redplayer.health <= 0:
+        if self.redplayer.health <= 0:
             self.winner = "Blue Player"
-        elif blueplayer.health <= 0:
+        elif self.blueplayer.health <= 0:
             self.winner = "Red Player"
-        elif redplayer.health >= 100:
+        elif self.redplayer.health >= 100:
             self.winner = "Red Player"
-        elif blueplayer.health >= 100:
+        elif self.blueplayer.health >= 100:
             self.winner = "Red Player"
 
     def display_game_screen(self):
@@ -521,6 +530,7 @@ class Game:
         self.screen.blit(self.seige_title, self.seige_title_rect)
 
     def display_end_game_screen(self):
+        print("inside end game")
         self.screen.blit(self.end_message_bg_surf, self.end_message_bg_rect)
         self.screen.blit(self.end_message_surf, self.end_message_rect)
         self.screen.blit(self.winnerMessageSurf, self.winnerMessageRect)
@@ -536,7 +546,7 @@ class Game:
 
         # HEALTH STAT
         self.redplayer_health_surf = self.health_font.render(
-            (str(redplayer.health)), True, (64, 64, 64)
+            (str(self.redplayer.health)), True, (64, 64, 64)
         )
         self.redplayer_health_rect = self.redplayer_health_surf.get_rect(
             center=(215, 285)
@@ -549,7 +559,7 @@ class Game:
         self.screen.blit(self.sword_icon_surf, self.redplayer_sword_icon_rect)
         # swords number
         self.redplayer_sword_surf = self.stat_font.render(
-            (str(redplayer.swords)), True, (64, 64, 64)
+            (str(self.redplayer.swords)), True, (64, 64, 64)
         )
         self.redplayer_sword_rect = self.redplayer_sword_surf.get_rect(center=(90, 225))
         self.screen.blit(self.redplayer_sword_surf, self.redplayer_sword_rect)
@@ -560,7 +570,7 @@ class Game:
         self.screen.blit(self.soldier_icon_surf, self.redplayer_soldier_icon_rect)
         # soldiers number
         self.redplayer_soldier_surf = self.stat_font.render(
-            (str(redplayer.soldiers)), True, (64, 64, 64)
+            (str(self.redplayer.soldiers)), True, (64, 64, 64)
         )
         self.redplayer_soldier_rect = self.redplayer_soldier_surf.get_rect(
             center=(40, 225)
@@ -576,7 +586,7 @@ class Game:
 
         # crystals text
         self.redplayer_crystal_surf = self.stat_font.render(
-            (str(redplayer.crystals)), True, (64, 64, 64)
+            (str(self.redplayer.crystals)), True, (64, 64, 64)
         )
         self.redplayer_crystal_rect = self.redplayer_crystal_surf.get_rect(
             center=(90, 250)
@@ -591,7 +601,7 @@ class Game:
 
         # wizard text
         self.redplayer_mages_surf = self.stat_font.render(
-            (str(redplayer.mages)), True, (64, 64, 64)
+            (str(self.redplayer.mages)), True, (64, 64, 64)
         )
         self.redplayer_mages_rect = self.redplayer_mages_surf.get_rect(center=(40, 250))
         self.screen.blit(self.redplayer_mages_surf, self.redplayer_mages_rect)
@@ -605,7 +615,7 @@ class Game:
 
         # hammer text
         self.redplayer_brick_surf = self.stat_font.render(
-            (str(redplayer.bricks)), True, (64, 64, 64)
+            (str(self.redplayer.bricks)), True, (64, 64, 64)
         )
         self.redplayer_brick_rect = self.redplayer_brick_surf.get_rect(center=(90, 275))
         self.screen.blit(self.redplayer_brick_surf, self.redplayer_brick_rect)
@@ -618,7 +628,7 @@ class Game:
 
         # builder text
         self.redplayer_builders_surf = self.stat_font.render(
-            (str(redplayer.builders)), True, (64, 64, 64)
+            (str(self.redplayer.builders)), True, (64, 64, 64)
         )
         self.redplayer_builders_rect = self.redplayer_builders_surf.get_rect(
             center=(40, 275)
@@ -631,7 +641,7 @@ class Game:
 
         # Health Stat
         self.blueplayer_health_surf = self.health_font.render(
-            (str(blueplayer.health)), True, (64, 64, 64)
+            (str(self.blueplayer.health)), True, (64, 64, 64)
         )
         self.blueplayer_health_rect = self.blueplayer_health_surf.get_rect(
             center=(685, 285)
@@ -646,7 +656,7 @@ class Game:
 
         # Sword Text
         self.blueplayer_sword_surf = self.stat_font.render(
-            (str(blueplayer.swords)), True, (64, 64, 64)
+            (str(self.blueplayer.swords)), True, (64, 64, 64)
         )
         self.blueplayer_sword_rect = self.blueplayer_sword_surf.get_rect(
             center=(875, 225)
@@ -661,7 +671,7 @@ class Game:
 
         # Soldiers Text
         self.blueplayer_soldier_surf = self.stat_font.render(
-            (str(blueplayer.soldiers)), True, (64, 64, 64)
+            (str(self.blueplayer.soldiers)), True, (64, 64, 64)
         )
         self.blueplayer_soldier_rect = self.blueplayer_soldier_surf.get_rect(
             center=(825, 225)
@@ -676,7 +686,7 @@ class Game:
 
         # Wizard Text
         self.blueplayer_mages_surf = self.stat_font.render(
-            (str(blueplayer.mages)), True, (64, 64, 64)
+            (str(self.blueplayer.mages)), True, (64, 64, 64)
         )
         self.blueplayer_mages_rect = self.blueplayer_mages_surf.get_rect(
             center=(825, 250)
@@ -691,7 +701,7 @@ class Game:
 
         # Crystal Text
         self.blueplayer_crystal_surf = self.stat_font.render(
-            (str(blueplayer.crystals)), True, (64, 64, 64)
+            (str(self.blueplayer.crystals)), True, (64, 64, 64)
         )
         self.blueplayer_crystal_rect = self.blueplayer_crystal_surf.get_rect(
             center=(875, 250)
@@ -706,7 +716,7 @@ class Game:
 
         # Builder Text
         self.blueplayer_builders_surf = self.stat_font.render(
-            (str(blueplayer.builders)), True, (64, 64, 64)
+            (str(self.blueplayer.builders)), True, (64, 64, 64)
         )
         self.blueplayer_builders_rect = self.blueplayer_builders_surf.get_rect(
             center=(825, 275)
@@ -721,7 +731,7 @@ class Game:
 
         # Hammer Text
         self.blueplayer_brick_surf = self.stat_font.render(
-            (str(blueplayer.bricks)), True, (64, 64, 64)
+            (str(self.blueplayer.bricks)), True, (64, 64, 64)
         )
         self.blueplayer_brick_rect = self.blueplayer_brick_surf.get_rect(
             center=(875, 275)
@@ -764,10 +774,10 @@ class Game:
             self.screen.blit(self.discard[0].surf, self.discard_rect)
 
     def draw_hands(self):
-        while len(redplayer.hand) < 5:
-            redplayer.hand.append(self.deck.pop(0))
-        while len(blueplayer.hand) < 5:
-            blueplayer.hand.append(self.deck.pop(0))
+        while len(self.redplayer.hand) < 5:
+            self.redplayer.hand.append(self.deck.pop(0))
+        while len(self.blueplayer.hand) < 5:
+            self.blueplayer.hand.append(self.deck.pop(0))
 
     def display_time(self):
         self.current_time = int(pygame.time.get_ticks() / 1000)
@@ -785,13 +795,13 @@ class Game:
 
 # initialize game variables
 g = Game()
-redplayer = RedCastle()
-blueplayer = BlueCastle()
-g.setup()
-g.determine_opponent()
-g.build_deck()
-g.draw_hands()
-g.event_ticker()
+# redplayer = RedCastle()
+# blueplayer = BlueCastle()
+# g.setup()
+# g.determine_opponent()
+# g.build_deck()
+# g.draw_hands()
+# g.event_ticker()
 
 timer = Timer(1000)
 timer2 = Timer(3000)
@@ -815,7 +825,7 @@ while g.run:
             if event.key == pygame.K_RETURN:
                 g.state = "upkeep"
             if event.key == pygame.K_g:
-                redplayer.health = 0
+                g.redplayer.health = 0
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
         if g.start:
@@ -853,12 +863,12 @@ while g.run:
                     g.next_player_active()
                     g.state = "upkeep"
 
-        if redplayer.health <= 0 or blueplayer.health <= 0:
+        if g.redplayer.health <= 0 or g.blueplayer.health <= 0:
             g.determine_winner()
             g.renderWinner()
             g.state = "gameover"
 
-        if redplayer.health >= 100 or blueplayer.health >= 100:
+        if g.redplayer.health >= 100 or g.blueplayer.health >= 100:
             g.determine_winner()
             g.renderWinner()
             g.state = "gameover"
@@ -866,13 +876,17 @@ while g.run:
     if g.state == "gameover":
         g.start = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if g.playAgainRect.collidepoint(mouse_pos) and event.button == 1:
-                g.reset()
-
-        if not g.displayed_gameover_message:
+        if g.displayed_gameover_message == False:
             g.display_end_game_screen()
             g.displayed_gameover_message = True
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("clicked button")
+            if g.playAgainRect.collidepoint(mouse_pos) and event.button == 1:
+                g.reset()
+            if g.quitGameRect.collidepoint(mouse_pos) and event.button == 1:
+                pygame.quit()
+                exit()
 
     if g.state == "home":
         g.start = False
