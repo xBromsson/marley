@@ -5,7 +5,7 @@ from sys import exit
 
 class Player:
     def __init__(self):
-        self.health = 40
+        self.health = 5
         self.opponent = None
         self.soldiers = 2
         self.mages = 2
@@ -368,6 +368,8 @@ class Game:
         self.run = True
         self.state = "home"
         self.start = False
+        self.displayed_gameover_message = False
+        self.winner = ""
         self.width = 900
         self.height = 600
         self.discard = []
@@ -376,9 +378,10 @@ class Game:
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
-        # set fonts
+        # FONTS
         self.title_font = pygame.font.Font(None, 50)
         self.health_font = pygame.font.Font(None, 40)
+        self.stat_font = pygame.font.Font(None, 30)
         self.paragraph_font = pygame.font.Font(None, 25)
 
         # create rectangle for game title
@@ -398,6 +401,41 @@ class Game:
         # create rectangle for discard location
         self.discard_surf = pygame.image.load("graphics/card_back.png").convert_alpha()
         self.discard_rect = self.discard_surf.get_rect(center=(450, 250))
+
+        # create rectangles for housing the end game modal
+        self.end_message_surf = pygame.Surface((400, 250))
+        self.end_message_surf.fill((255, 255, 255))
+        self.end_message_rect = self.end_message_surf.get_rect(center=(450, 300))
+        self.end_message_bg_surf = pygame.Surface(
+            (self.width, self.height), pygame.SRCALPHA
+        )
+        self.end_message_bg_surf.fill((255, 255, 255, 128))
+        self.end_message_bg_rect = self.end_message_bg_surf.get_rect(center=(450, 300))
+
+        # references to icon images
+        self.sword_icon_surf = pygame.image.load(
+            "graphics/sword_icon.png"
+        ).convert_alpha()
+
+        self.crystal_icon_surf = pygame.image.load(
+            "graphics/crystal_icon.png"
+        ).convert_alpha()
+
+        self.hammer_icon_surf = pygame.image.load(
+            "graphics/hammer_icon.png"
+        ).convert_alpha()
+
+        self.soldier_icon_surf = pygame.image.load(
+            "graphics/soldier_icon.png"
+        ).convert_alpha()
+
+        self.wizard_icon_surf = pygame.image.load(
+            "graphics/wizard_icon.png"
+        ).convert_alpha()
+
+        self.builder_icon_surf = pygame.image.load(
+            "graphics/builder_icon.png"
+        ).convert_alpha()
 
     def setup(self):
         self.active_player = redplayer
@@ -437,114 +475,208 @@ class Game:
         self.screen.blit(self.bg_surf, self.bg_rect)
         self.screen.blit(self.seige_title, self.seige_title_rect)
 
+    def display_end_game_message(self):
+        self.screen.blit(self.end_message_bg_surf, self.end_message_bg_rect)
+        self.screen.blit(self.end_message_surf, self.end_message_rect)
+
     def display_stats(self):
-        # player 1
+        #######################
+        # RED PLAYER STATS
+        #######################
+
+        # HEALTH STAT
         self.redplayer_health_surf = self.health_font.render(
             (str(redplayer.health)), True, (64, 64, 64)
         )
         self.redplayer_health_rect = self.redplayer_health_surf.get_rect(
-            center=(50, 200)
+            center=(215, 285)
         )
         self.screen.blit(self.redplayer_health_surf, self.redplayer_health_rect)
 
-        self.redplayer_sword_surf = self.health_font.render(
-            ("S" + str(redplayer.swords)), True, (64, 64, 64)
+        # SWORD STATS
+        # swords icon
+        self.redplayer_sword_icon_rect = self.sword_icon_surf.get_rect(center=(75, 225))
+        self.screen.blit(self.sword_icon_surf, self.redplayer_sword_icon_rect)
+        # swords number
+        self.redplayer_sword_surf = self.stat_font.render(
+            (str(redplayer.swords)), True, (64, 64, 64)
         )
-        self.redplayer_sword_rect = self.redplayer_sword_surf.get_rect(center=(25, 225))
+        self.redplayer_sword_rect = self.redplayer_sword_surf.get_rect(center=(90, 225))
         self.screen.blit(self.redplayer_sword_surf, self.redplayer_sword_rect)
-
-        self.redplayer_crystal_surf = self.health_font.render(
-            ("C" + str(redplayer.crystals)), True, (64, 64, 64)
+        # soldiers icon
+        self.redplayer_soldier_icon_rect = self.soldier_icon_surf.get_rect(
+            center=(25, 225)
         )
-        self.redplayer_crystal_rect = self.redplayer_crystal_surf.get_rect(
-            center=(25, 250)
-        )
-        self.screen.blit(self.redplayer_crystal_surf, self.redplayer_crystal_rect)
-
-        self.redplayer_brick_surf = self.health_font.render(
-            ("B" + str(redplayer.bricks)), True, (64, 64, 64)
-        )
-        self.redplayer_brick_rect = self.redplayer_brick_surf.get_rect(center=(25, 275))
-        self.screen.blit(self.redplayer_brick_surf, self.redplayer_brick_rect)
-
-        self.redplayer_soldier_surf = self.health_font.render(
+        self.screen.blit(self.soldier_icon_surf, self.redplayer_soldier_icon_rect)
+        # soldiers number
+        self.redplayer_soldier_surf = self.stat_font.render(
             (str(redplayer.soldiers)), True, (64, 64, 64)
         )
         self.redplayer_soldier_rect = self.redplayer_soldier_surf.get_rect(
-            center=(75, 225)
+            center=(40, 225)
         )
         self.screen.blit(self.redplayer_soldier_surf, self.redplayer_soldier_rect)
 
-        self.redplayer_mages_surf = self.health_font.render(
+        # CRYSTAL STATS
+        # crystals icon
+        self.redplayer_crystal_icon_rect = self.crystal_icon_surf.get_rect(
+            center=(75, 250)
+        )
+        self.screen.blit(self.crystal_icon_surf, self.redplayer_crystal_icon_rect)
+
+        # crystals text
+        self.redplayer_crystal_surf = self.stat_font.render(
+            (str(redplayer.crystals)), True, (64, 64, 64)
+        )
+        self.redplayer_crystal_rect = self.redplayer_crystal_surf.get_rect(
+            center=(90, 250)
+        )
+        self.screen.blit(self.redplayer_crystal_surf, self.redplayer_crystal_rect)
+
+        # wizard icon
+        self.redplayer_wizard_icon_rect = self.wizard_icon_surf.get_rect(
+            center=(25, 250)
+        )
+        self.screen.blit(self.wizard_icon_surf, self.redplayer_wizard_icon_rect)
+
+        # wizard text
+        self.redplayer_mages_surf = self.stat_font.render(
             (str(redplayer.mages)), True, (64, 64, 64)
         )
-        self.redplayer_mages_rect = self.redplayer_mages_surf.get_rect(center=(75, 250))
+        self.redplayer_mages_rect = self.redplayer_mages_surf.get_rect(center=(40, 250))
         self.screen.blit(self.redplayer_mages_surf, self.redplayer_mages_rect)
 
-        self.redplayer_builders_surf = self.health_font.render(
+        # BUILDER STATS
+        # hammer icon
+        self.redplayer_hammer_icon_rect = self.hammer_icon_surf.get_rect(
+            center=(75, 275)
+        )
+        self.screen.blit(self.hammer_icon_surf, self.redplayer_hammer_icon_rect)
+
+        # hammer text
+        self.redplayer_brick_surf = self.stat_font.render(
+            (str(redplayer.bricks)), True, (64, 64, 64)
+        )
+        self.redplayer_brick_rect = self.redplayer_brick_surf.get_rect(center=(90, 275))
+        self.screen.blit(self.redplayer_brick_surf, self.redplayer_brick_rect)
+
+        # builder icon
+        self.redplayer_builder_icon_rect = self.builder_icon_surf.get_rect(
+            center=(25, 275)
+        )
+        self.screen.blit(self.builder_icon_surf, self.redplayer_builder_icon_rect)
+
+        # builder text
+        self.redplayer_builders_surf = self.stat_font.render(
             (str(redplayer.builders)), True, (64, 64, 64)
         )
         self.redplayer_builders_rect = self.redplayer_builders_surf.get_rect(
-            center=(75, 275)
+            center=(40, 275)
         )
         self.screen.blit(self.redplayer_builders_surf, self.redplayer_builders_rect)
 
-        # player 2
+        #######################
+        # BLUE PLAYER STATS
+        #######################
+
+        # Health Stat
         self.blueplayer_health_surf = self.health_font.render(
             (str(blueplayer.health)), True, (64, 64, 64)
         )
         self.blueplayer_health_rect = self.blueplayer_health_surf.get_rect(
-            center=(850, 200)
+            center=(685, 285)
         )
         self.screen.blit(self.blueplayer_health_surf, self.blueplayer_health_rect)
 
-        self.blueplayer_sword_surf = self.health_font.render(
-            ("S" + str(blueplayer.swords)), True, (64, 64, 64)
+        # Sword Icon
+        self.blueplayer_sword_icon_rect = self.sword_icon_surf.get_rect(
+            center=(860, 225)
+        )
+        self.screen.blit(self.sword_icon_surf, self.blueplayer_sword_icon_rect)
+
+        # Sword Text
+        self.blueplayer_sword_surf = self.stat_font.render(
+            (str(blueplayer.swords)), True, (64, 64, 64)
         )
         self.blueplayer_sword_rect = self.blueplayer_sword_surf.get_rect(
-            center=(825, 225)
+            center=(875, 225)
         )
         self.screen.blit(self.blueplayer_sword_surf, self.blueplayer_sword_rect)
 
-        self.blueplayer_crystal_surf = self.health_font.render(
-            ("C" + str(blueplayer.crystals)), True, (64, 64, 64)
+        # Soldiers Icon
+        self.blueplayer_soldier_icon_rect = self.soldier_icon_surf.get_rect(
+            center=(810, 225)
         )
-        self.blueplayer_crystal_rect = self.blueplayer_crystal_surf.get_rect(
-            center=(825, 250)
-        )
-        self.screen.blit(self.blueplayer_crystal_surf, self.blueplayer_crystal_rect)
+        self.screen.blit(self.soldier_icon_surf, self.blueplayer_soldier_icon_rect)
 
-        self.blueplayer_brick_surf = self.health_font.render(
-            ("B" + str(blueplayer.bricks)), True, (64, 64, 64)
-        )
-        self.blueplayer_brick_rect = self.blueplayer_brick_surf.get_rect(
-            center=(825, 275)
-        )
-        self.screen.blit(self.blueplayer_brick_surf, self.blueplayer_brick_rect)
-
-        self.blueplayer_soldier_surf = self.health_font.render(
+        # Soldiers Text
+        self.blueplayer_soldier_surf = self.stat_font.render(
             (str(blueplayer.soldiers)), True, (64, 64, 64)
         )
         self.blueplayer_soldier_rect = self.blueplayer_soldier_surf.get_rect(
-            center=(875, 225)
+            center=(825, 225)
         )
         self.screen.blit(self.blueplayer_soldier_surf, self.blueplayer_soldier_rect)
 
-        self.blueplayer_mages_surf = self.health_font.render(
+        # Wizard Icon
+        self.blueplayer_wizard_icon_rect = self.wizard_icon_surf.get_rect(
+            center=(810, 250)
+        )
+        self.screen.blit(self.wizard_icon_surf, self.blueplayer_wizard_icon_rect)
+
+        # Wizard Text
+        self.blueplayer_mages_surf = self.stat_font.render(
             (str(blueplayer.mages)), True, (64, 64, 64)
         )
         self.blueplayer_mages_rect = self.blueplayer_mages_surf.get_rect(
-            center=(875, 250)
+            center=(825, 250)
         )
         self.screen.blit(self.blueplayer_mages_surf, self.blueplayer_mages_rect)
 
-        self.blueplayer_builders_surf = self.health_font.render(
+        # Crystal Icon
+        self.blueplayer_crystal_icon_rect = self.crystal_icon_surf.get_rect(
+            center=(860, 250)
+        )
+        self.screen.blit(self.crystal_icon_surf, self.blueplayer_crystal_icon_rect)
+
+        # Crystal Text
+        self.blueplayer_crystal_surf = self.stat_font.render(
+            (str(blueplayer.crystals)), True, (64, 64, 64)
+        )
+        self.blueplayer_crystal_rect = self.blueplayer_crystal_surf.get_rect(
+            center=(875, 250)
+        )
+        self.screen.blit(self.blueplayer_crystal_surf, self.blueplayer_crystal_rect)
+
+        # Builder Icon
+        self.blueplayer_builder_icon_rect = self.builder_icon_surf.get_rect(
+            center=(810, 275)
+        )
+        self.screen.blit(self.builder_icon_surf, self.blueplayer_builder_icon_rect)
+
+        # Builder Text
+        self.blueplayer_builders_surf = self.stat_font.render(
             (str(blueplayer.builders)), True, (64, 64, 64)
         )
         self.blueplayer_builders_rect = self.blueplayer_builders_surf.get_rect(
-            center=(875, 275)
+            center=(825, 275)
         )
         self.screen.blit(self.blueplayer_builders_surf, self.blueplayer_builders_rect)
+
+        # Hammer Icon
+        self.blueplayer_hammer_icon_rect = self.hammer_icon_surf.get_rect(
+            center=(860, 275)
+        )
+        self.screen.blit(self.hammer_icon_surf, self.blueplayer_hammer_icon_rect)
+
+        # Hammer Text
+        self.blueplayer_brick_surf = self.stat_font.render(
+            (str(blueplayer.bricks)), True, (64, 64, 64)
+        )
+        self.blueplayer_brick_rect = self.blueplayer_brick_surf.get_rect(
+            center=(875, 275)
+        )
+        self.screen.blit(self.blueplayer_brick_surf, self.blueplayer_brick_rect)
 
     def build_deck(self):
         self.soldier_cards = (
@@ -672,15 +804,25 @@ while g.run:
 
         if redplayer.health <= 0 or blueplayer.health <= 0:
             g.state = "gameover"
+            if redplayer.health <= 0:
+                g.winner = "Blue Player"
+            if redplayer.health <= 0:
+                g.winner = "Red Player"
 
         if redplayer.health >= 100 or blueplayer.health >= 100:
             g.state = "gameover"
+            if redplayer.health >= 100:
+                g.winner = "Red Player"
+            if redplayer.health >= 100:
+                g.winner = "Red Player"
 
-    elif g.state == "gameover":
+    if g.state == "gameover":
         g.start = False
-        g.display_home_screen()
+        if not g.displayed_gameover_message:
+            g.display_end_game_message()
+            g.displayed_gameover_message = True
 
-    elif g.state == "home":
+    if g.state == "home":
         g.start = False
         g.display_home_screen()
 
