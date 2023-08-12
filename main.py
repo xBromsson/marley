@@ -5,7 +5,7 @@ from sys import exit
 
 class Player:
     def __init__(self):
-        self.health = 5
+        self.health = 30
         self.opponent = None
         self.soldiers = 2
         self.mages = 2
