@@ -793,24 +793,10 @@ class Game:
         pygame.time.set_timer(self.event_timer, 5000)
 
 
-# initialize game variables
+# initialize game
 g = Game()
-# redplayer = RedCastle()
-# blueplayer = BlueCastle()
-# g.setup()
-# g.determine_opponent()
-# g.build_deck()
-# g.draw_hands()
-# g.event_ticker()
-
 timer = Timer(1000)
 timer2 = Timer(3000)
-
-# USEREVENT Timer.
-
-
-# game_time = 0
-
 
 # main game loop
 while g.run:
