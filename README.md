@@ -2,14 +2,33 @@
 
 Turn based card game built using OOP in python pygame
 
-## Prerequisites
+## Setup
 
 - **Python**: Ensure you have Python installed. If not, you can download it from [here](https://www.python.org/downloads/).
 - **pygame**: This game requires pygame version 2.5.0.
 
-After you clone this repo and install the prerequisites you can run main.py and try it out.
+After you clone this repo and install the prerequisites you can run `main.py` and try it out.
 
-Or you can try it from the browser on my Replit: https://replit.com/@xbromsson/marley?v=1
+Or you can try it from the browser on my [Replit](https://replit.com/@xbromsson/marley?v=1).
+
+## Quickstart
+
+```bash
+# clone repo
+git clone https://github.com/xBromsson/marley.git
+
+# change directory
+cd marley/
+
+# install dependencies
+python -m pip install -r requirements.txt
+
+# run program
+python main.py
+
+# quit program
+ctrl + c
+```
 
 ## Development
 
@@ -39,7 +58,7 @@ Additional tooling includes but is not limited to:
     asdf plugin-add python
 
     # install stable python
-    asdf install python <latest|3.11.4>
+    asdf install python <latest|3.10.12>
 
     # set stable to system python
     asdf global python latest
