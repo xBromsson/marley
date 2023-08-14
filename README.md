@@ -118,6 +118,12 @@ Additional tooling includes but is not limited to:
     ```
 * Usage
     ```bash
+    # run linter
+    ruff check .
+
+    # run linter and fix issues
+    ruff fix .
+
     # run tests
     ruff
 
