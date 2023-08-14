@@ -2,6 +2,10 @@
 
 Turn based card game built using OOP in python pygame
 
+<!-- TODO: could also granularly control the size with html -->
+<!-- <img src="assets/screenshots/game_start.png" width="50%"> -->
+![Marley](assets/screenshots/game_start.png)
+
 ## Prerequisites
 
 - **Python**: Ensure you have Python installed. If not, you can download it from [here](https://www.python.org/downloads/).
