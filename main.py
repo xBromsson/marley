@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import pygame
 import random
 from sys import exit
@@ -169,7 +171,7 @@ class Builder(Card):
 class Catapult(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/catapult.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/catapult.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -180,7 +182,7 @@ class Catapult(Soldier):
 class Warrior(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/warrior.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/warrior.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 4
 
@@ -191,7 +193,7 @@ class Warrior(Soldier):
 class King(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/king.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/king.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -202,7 +204,7 @@ class King(Soldier):
 class Archer(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/archer.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/archer.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 5
 
@@ -215,7 +217,7 @@ class Archer(Soldier):
 class Fire(Soldier):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/fire.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/fire.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 5
         self.fire = 3
@@ -232,7 +234,7 @@ class Fire(Soldier):
 class SpellBook(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/spellbook.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/spellbook.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
         # self.draw = 3
@@ -250,7 +252,7 @@ class SpellBook(Mage):
 class Confusion(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/confusion.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/confusion.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 15
 
@@ -266,7 +268,7 @@ class Confusion(Mage):
 class Dragon(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/dragon.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/dragon.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 25
 
@@ -277,7 +279,7 @@ class Dragon(Mage):
 class Wizard(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/wizard.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/wizard.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -288,7 +290,7 @@ class Wizard(Mage):
 class Scroll(Mage):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/scroll.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/scroll.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -299,7 +301,7 @@ class Scroll(Mage):
 class Gate(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/gate.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/gate.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 7
 
@@ -310,7 +312,7 @@ class Gate(Builder):
 class BlackSmith(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/blacksmith.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/blacksmith.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 8
 
@@ -321,7 +323,7 @@ class BlackSmith(Builder):
 class Castle(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/castle.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/castle.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -332,7 +334,7 @@ class Castle(Builder):
 class Cart(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/cart.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/cart.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 12
 
@@ -345,7 +347,7 @@ class Cart(Builder):
 class Kingdom(Builder):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.image.load(f"graphics/kingdom.png").convert_alpha()
+        self.surf = pygame.image.load("graphics/kingdom.png").convert_alpha()
         self.rect = self.surf.get_rect()
         self.cost = 17
 
@@ -484,7 +486,7 @@ class Game:
                 if (
                     card.rect.collidepoint(mouse_pos)
                     and event.button == 1
-                    and card.playable == True
+                    and card.playable is True
                 ):
                     g.discard.insert(0, g.active_player.hand.pop(i))
                     # self.hand.insert(i, deck.pop(0))
@@ -815,7 +817,7 @@ while g.run:
         if event.type == pygame.MOUSEMOTION:
             mouse_pos = event.pos
         if g.start:
-            if timer.wait and timer2.wait == False:
+            if timer.wait and timer2.wait is False:
                 g.active_player.handle_inputs()
         else:
             if event.type == pygame.KEYDOWN:
@@ -825,7 +827,7 @@ while g.run:
             pass
 
     # displays main game screen and handles the game loop and interactions.
-    if g.start == True:
+    if g.start is True:
         g.display_game_screen()
         timer.check()
         timer2.check()
@@ -843,9 +845,9 @@ while g.run:
             g.apply_abilities()
             g.state = "clean"
         if g.state == "clean":
-            if timer.wait == False:
+            if timer.wait is False:
                 g.active_player.refresh_hand()
-                if timer2.wait == False:
+                if timer2.wait is False:
                     g.next_player_active()
                     g.state = "upkeep"
 
@@ -862,7 +864,7 @@ while g.run:
     if g.state == "gameover":
         g.start = False
 
-        if g.displayed_gameover_message == False:
+        if g.displayed_gameover_message is False:
             g.display_end_game_screen()
             g.displayed_gameover_message = True
 
