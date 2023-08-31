@@ -4,9 +4,11 @@ Turn based card game built using OOP in python pygame
 
 <!-- TODO: could also granularly control the size with html -->
 <!-- <img src="assets/screenshots/game_start.png" width="50%"> -->
+
 ![Marley](assets/screenshots/game_start.png)
 
 ## Prerequisites
+
 ## Setup
 
 - **Python**: Ensure you have Python installed. If not, you can download it from [here](https://www.python.org/downloads/).
@@ -47,7 +49,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # install dependencies
-python -m pip install -r requirements.txt 
+python -m pip install -r requirements.txt
 ```
 
 ### Additional tooling
@@ -56,93 +58,100 @@ Additional tooling includes but is not limited to:
 
 #### asdf
 
-* Install [asdf](https://asdf-vm.com/guide/getting-started.html#_2-download-asdf)
-* Usage
-    ```bash
-    # add python plugin
-    asdf plugin-add python
+- Install [asdf](https://asdf-vm.com/guide/getting-started.html#_2-download-asdf)
+- Usage
 
-    # install stable python
-    asdf install python <latest|3.10.12>
+  ```bash
+  # add python plugin
+  asdf plugin-add python
 
-    # set stable to system python
-    asdf global python latest
+  # install stable python
+  asdf install python <latest|3.10.12>
 
-    # add poetry asdf plugin
-    asdf plugin-add poetry https://github.com/asdf-community/asdf-poetry.git
+  # set stable to system python
+  asdf global python latest
 
-    # install latest version via asdf
-    asdf install poetry <latest|1.5.1>
+  # add poetry asdf plugin
+  asdf plugin-add poetry https://github.com/asdf-community/asdf-poetry.git
 
-    # set latest version as default
-    asdf global poetry latest
-    ```
+  # install latest version via asdf
+  asdf install poetry <latest|1.5.1>
+
+  # set latest version as default
+  asdf global poetry latest
+  ```
 
 #### poetry
 
-* Install [poetry](https://python-poetry.org/docs/#installation) if not using `asdf`
-* Usage
-    ```bash
-    # use venv in repo
-    poetry config virtualenvs.in-project true
+- Install [poetry](https://python-poetry.org/docs/#installation) if not using `asdf`
+- Usage
 
-    # install dependencies
-    poetry install
+  ```bash
+  # use venv in repo
+  poetry config virtualenvs.in-project true
 
-    # add new dependency
-    poetry add <package>
+  # install dependencies
+  poetry install
 
-    # remove dependency
-    poetry remove <package>
+  # add new dependency
+  poetry add <package>
 
-    # activate virtual environment
-    poetry shell
+  # remove dependency
+  poetry remove <package>
 
-    # run program
-    python main.py
+  # activate virtual environment
+  poetry shell
 
-    # exit virtual environment
-    exit
-    ```
+  # run program
+  python main.py
+
+  # exit virtual environment
+  exit
+  ```
 
 #### vscode
 
-* Install [vscode](https://code.visualstudio.com/download)
-* Setup [vscode settings](.vscode/launch.json)
-  * Handles debug settings for generic python programs as well as others (e.g., django, flask, etc.)
+- Install [vscode](https://code.visualstudio.com/download)
+- Setup [vscode settings](.vscode/launch.json)
+  - Handles debug settings for generic python programs as well as others (e.g., django, flask, etc.)
 
 #### ruff
 
-* Installed via `poetry` or `pip`
-* Add VSCode plugin for [ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
-  * **Optional**: disable pylance in favor of ruff in [repo settings](.vscode/settings.json)
+- Installed via `poetry` or `pip`
+- Add VSCode plugin for [ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+  - **Optional**: disable pylance in favor of ruff in [repo settings](.vscode/settings.json)
     ```json
     "python.analysis.ignore": [
       "*"
     ],
     ```
-* Usage
-    ```bash
-    # run linter
-    ruff check .
+- Usage
 
-    # run linter and fix issues
-    ruff fix .
+  ```bash
+  # run linter
+  ruff check .
 
-    # run tests
-    ruff
+  # run linter and fix issues
+  ruff fix .
 
-    # run tests with coverage
-    ruff --coverage
+  # run tests
+  ruff
 
-    # run tests with coverage and open in browser
-    ruff --coverage --open
-    ```
+  # run tests with coverage
+  ruff --coverage
+
+  # run tests with coverage and open in browser
+  ruff --coverage --open
+  ```
 
 #### dependabot
 
-* [Dependabot](https://dependabot.com/) is a GitHub tool that automatically creates pull requests to keep dependencies up to date.
+- [Dependabot](https://dependabot.com/) is a GitHub tool that automatically creates pull requests to keep dependencies up to date.
 
 #### editorconfig
 
 Handles formatting of files. [Install the editorconfig plugin](https://editorconfig.org/#download) for your editor of choice.
+
+## 📜 License
+
+This project is released into the public domain using The Unlicense - see the [LICENSE](https://choosealicense.com/licenses/unlicense/) file for details.
