@@ -10,7 +10,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pygame = "2.5.0"
+pygame = "2.5.2"
 
 [tool.poetry.group.dev.dependencies]
 icecream = "^2.1.3"
